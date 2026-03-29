@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Área Profesional · Abuela Tata</title>
+
+  <link rel="icon" href="./assets/favicon.png" />
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="theme-color" content="#7fb9b3" />
+  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+
+  <style>
+    :root{
+      --bg:#f5efe6;
+      --card:rgba(255,255,255,.70);
+      --card2:#fff;
+      --ink:#5f4636;
+      --muted:#7a5c47;
+      --line:#e6d6c6;
+      --accent:#7fb9b3;
+      --accent2:#d7a6a6;
+      --shadow: 0 10px 30px rgba(60,40,25,.12);
+      --radius:18px;
+      --max:1100px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      background-image: radial-gradient(#e8dfd3 1px, transparent 1px);
+      background-size: 18px 18px;
+      color:var(--ink);
+    }
+    a{color:inherit}
+
+    .wrap{max-width:var(--max); margin:0 auto; padding:18px 14px 60px}
+
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+      padding:12px 12px;
+      background:rgba(255,255,255,.72);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      position:sticky; top:10px; z-index:20;
+      backdrop-filter: blur(8px);
+    }
+    .brand{display:flex; align-items:center; gap:12px; min-width: 230px;}
+    .brand img{
+      width:46px; height:46px; object-fit:contain;
+      border-radius:12px; background:#fff; border:1px solid var(--line)
+    }
+    .brand .t1{font-size:17px; font-weight:800; letter-spacing:.2px}
+    .brand .t2{font-size:12px; color:var(--muted); margin-top:2px}
+
+    .lang{
+      display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .flag{
+      border:1px solid var(--line);
+      background:#fff;
+      padding:8px 10px;
+      border-radius:12px;
+      box-shadow:0 6px 16px rgba(60,40,25,.08);
+      cursor:pointer;
+      font-size:14px;
+      user-select:none;
+      transition:.15s transform, .15s background, .15s border-color;
+    }
+    .flag[aria-pressed="true"]{
+      background:rgba(127,185,179,.18);
+      border-color:rgba(127,185,179,.55);
+    }
+    .flag:active{transform:scale(.98)}
+
+    .hero{
+      margin-top:14px;
+      padding:18px 16px;
+      background:rgba(255,255,255,.72);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .hero h1{margin:0 0 6px; font-size:22px}
+    .hero p{margin:0; color:var(--muted); line-height:1.45}
+
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+    @media(min-width:900px){
+      .grid{grid-template-columns: 1fr 1fr;}
+    }
+
+    .card{
+      padding:14px;
+      background:rgba(255,255,255,.72);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      transition:.15s transform, .15s background, .15s border-color;
+      text-decoration:none;
+      display:block;
+      position:relative;
+      overflow:hidden;
+    }
+    .card:hover{ transform: translateY(-2px); }
+    .card:active{ transform: translateY(0px) scale(.995); }
+
+    .cardHead{
+      display:flex; align-items:flex-start; gap:12px;
+    }
+    .ico{
+      width:44px; height:44px; border-radius:14px;
+      display:grid; place-items:center;
+      background:rgba(215,166,166,.18);
+      border:1px solid rgba(215,166,166,.35);
+      font-size:18px;
+      flex:0 0 auto;
+    }
+    .ttl{
+      font-weight:900;
+      margin:0;
+      font-size:16px;
+      letter-spacing:.15px;
+    }
+    .sub{
+      margin:6px 0 0;
+      color:var(--muted);
+      line-height:1.35;
+      font-size:13px;
+    }
+
+    .row{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(127,185,179,.14);
+      border:1px solid rgba(127,185,179,.35);
+      font-size:12px;
+      color:var(--ink);
+      white-space:nowrap;
+    }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
+      box-shadow:0 6px 16px rgba(60,40,25,.08);
+      transition:.15s transform, .15s background, .15s border-color;
+      font-size:14px;
+      text-decoration:none;
+      white-space:nowrap;
+    }
+    .btn:hover{background:rgba(127,185,179,.10); border-color:rgba(127,185,179,.45)}
+    .btn.primary{background:rgba(127,185,179,.20); border-color:rgba(127,185,179,.65)}
+    .btn:active{transform:scale(.99)}
+
+    .note{
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px dashed rgba(127,185,179,.65);
+      background:rgba(127,185,179,.10);
+      color:var(--ink);
+      line-height:1.35;
+      font-size:13px;
+    }
+
+    footer{
+      margin-top:14px;
+      text-align:center;
+      font-size:12px;
+      color:var(--muted);
+      opacity:.95;
+    }
+
+
+    .sectionBlock{
+      margin-top:18px;
+    }
+    .sectionHead{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin:18px 2px 10px;
+      padding:0 2px;
+    }
+    .sectionEyebrow{
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      color:var(--accent);
+      margin-bottom:4px;
+    }
+    .sectionTitle{
+      margin:0;
+      font-size:24px;
+      line-height:1.05;
+    }
+    .sectionText{
+      margin:5px 0 0;
+      color:var(--muted);
+      line-height:1.35;
+      font-size:14px;
+      max-width:700px;
+    }
+    .segmentedNav{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+    .segBtn{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.82);
+      box-shadow:var(--shadow);
+      text-decoration:none;
+      min-height:86px;
+    }
+    .segBtn strong{
+      font-size:16px;
+      line-height:1.15;
+    }
+    .segBtn span{
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.25;
+    }
+    .segBtn.orders{border-color:rgba(127,185,179,.55); background:rgba(127,185,179,.12);}
+    .segBtn.stock{border-color:rgba(215,166,166,.45); background:rgba(215,166,166,.10);}
+    @media(max-width:560px){
+      .sectionHead{margin-top:16px}
+      .sectionTitle{font-size:21px}
+      .sectionText{font-size:13px}
+      .segmentedNav{grid-template-columns:1fr; gap:8px}
+      .segBtn{padding:13px 14px; min-height:auto}
+      .segBtn strong{font-size:15px}
+      .segBtn span{font-size:12px}
+    }
+
+    .installBar{
+      position:fixed;
+      left:50%;
+      bottom:12px;
+      transform:translateX(-50%);
+      width:min(calc(100% - 24px), 430px);
+      display:none;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      background:rgba(255,255,255,.96);
+      border:1px solid var(--line);
+      border-radius:16px;
+      box-shadow:0 12px 28px rgba(60,40,25,.16);
+      z-index:50;
+      backdrop-filter: blur(10px);
+    }
+    .installCopy{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .installTitle{
+      font-size:13px;
+      font-weight:800;
+      line-height:1.15;
+    }
+    .installText{
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.2;
+    }
+    .installActions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex:0 0 auto;
+    }
+    .installMini{
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
+      font-size:12px;
+      box-shadow:0 6px 16px rgba(60,40,25,.08);
+      white-space:nowrap;
+    }
+    .installMini.primary{
+      background:rgba(127,185,179,.20);
+      border-color:rgba(127,185,179,.65);
+      font-weight:700;
+    }
+    @media(max-width:560px){
+      .wrap{padding:14px 10px 88px}
+      .topbar{padding:10px; gap:10px}
+      .brand{min-width:0; flex:1 1 auto}
+      .brand .t1{font-size:16px}
+      .brand .t2{font-size:11px}
+      .lang{gap:6px}
+      .flag{padding:7px 8px; font-size:12px}
+      .hero{padding:15px 14px}
+      .hero h1{font-size:20px}
+      .card{padding:12px}
+      .row{gap:8px}
+      .btn{padding:9px 10px; font-size:13px}
+      .pill{font-size:11px; padding:6px 9px}
+      .installBar{padding:10px; gap:8px}
+      .installTitle{font-size:12px}
+      .installText{font-size:10px}
+      .installMini{padding:8px 9px; font-size:11px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <img src="./assets/logo.png" alt="Abuela Tata" onerror="this.style.display='none'">
+        <div>
+          <div class="t1" data-i18n="brand_title">Área Profesional</div>
+          <div class="t2" data-i18n="brand_sub">Acceso para clientes · pedidos · descargas · tarifas</div>
+        </div>
+      </div>
+
+      <div class="lang" aria-label="Idioma">
+        <button class="flag" id="btn-es" aria-pressed="true" title="Español">🇪🇸 ES</button>
+        <button class="flag" id="btn-en" aria-pressed="false" title="English">🇬🇧 EN</button>
+        <button class="flag" id="btn-pt" aria-pressed="false" title="Português">🇵🇹 PT</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <h1 data-i18n="hero_title">Bienvenid@ al Área Profesional</h1>
+      <p data-i18n="hero_text">
+        Acceso directo a la app de pedidos, stock disponible, descargas multimedia en alta resolución, tarifas, calendario de campaña y condiciones.
+      </p>
+    </section>
+
+    <section class="sectionBlock" aria-label="Acceso rápido a pedidos">
+      <div class="sectionHead">
+        <div>
+          <div class="sectionEyebrow" data-i18n="quick_eyebrow">Acceso rápido</div>
+          <h2 class="sectionTitle" data-i18n="quick_title">¿Qué deseas hacer?</h2>
+          <p class="sectionText" data-i18n="quick_text">En la app de pedidos encontrarás dos formas distintas de trabajar: repetición de campaña y stock disponible con entrega inmediata.</p>
+        </div>
+      </div>
+
+      <div class="segmentedNav">
+        <a class="segBtn orders" href="./pedidos.html#repeticion">
+          <strong data-i18n="quick_repeat_title">Pedido de repetición</strong>
+          <span data-i18n="quick_repeat_text">Producción según calendario y fechas de servicio.</span>
+        </a>
+        <a class="segBtn stock" href="./pedidos.html#stock">
+          <strong data-i18n="quick_stock_title">Stock disponible</strong>
+          <span data-i18n="quick_stock_text">Entrega inmediata hasta agotar existencias.</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="sectionBlock">
+      <div class="sectionHead">
+        <div>
+          <div class="sectionEyebrow" data-i18n="orders_eyebrow">Zona principal</div>
+          <h2 class="sectionTitle" data-i18n="orders_title">Pedidos</h2>
+          <p class="sectionText" data-i18n="orders_text">Aquí accedes a la app donde podrás elegir entre repeticiones y stock disponible. Lo hemos dejado más claro para que el cliente lo entienda a la primera.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="Secciones">
+      <!-- PEDIDOS -->
+      <a class="card" href="./pedidos.html">
+        <div class="cardHead">
+          <div class="ico">🧾</div>
+          <div>
+            <h2 class="ttl" data-i18n="card_orders">Pedidos · Repetición y Stock</h2>
+            <p class="sub" data-i18n="card_orders_sub">
+              Accede a la app de pedidos con dos zonas diferenciadas: repetición de campaña y stock disponible inmediato.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="pill" data-i18n="pill_fullscreen">Repetición + Stock</span>
+          <span class="btn primary">Entrar →</span>
+        </div>
+      </a>
+
+    </section>
+
+    <section class="sectionBlock">
+      <div class="sectionHead">
+        <div>
+          <div class="sectionEyebrow" data-i18n="info_eyebrow">Documentación</div>
+          <h2 class="sectionTitle" data-i18n="info_title">Información de campaña</h2>
+          <p class="sectionText" data-i18n="info_text">Todo lo demás queda agrupado aquí: descargas, tarifas, calendario, condiciones y soporte.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="Información">
+      <!-- MULTIMEDIA -->
+      <a class="card" href="./multimedia.html">
+        <div class="cardHead">
+          <div class="ico">📸</div>
+          <div>
+            <h2 class="ttl" data-i18n="card_media">Descarga multimedia</h2>
+            <p class="sub" data-i18n="card_media_sub">
+              WeTransfer en alta calidad (sin pérdida).
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="pill" data-i18n="pill_wetransfer">WeTransfer</span>
+          <span class="btn">Entrar →</span>
+        </div>
+      </a>
+
+      <!-- TARIFA -->
+      <a class="card" href="./tarifa.html">
+        <div class="cardHead">
+          <div class="ico">💶</div>
+          <div>
+            <h2 class="ttl" data-i18n="card_prices">Tarifas</h2>
+            <p class="sub" data-i18n="card_prices_sub">
+              Tarifa oficial en PDF (y Excel si aplica).
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="pill" data-i18n="pill_pdf">PDF</span>
+          <span class="btn">Entrar →</span>
+        </div>
+      </a>
+
+      <!-- CALENDARIO -->
+      <a class="card" href="./calendario.html">
+        <div class="cardHead">
+          <div class="ico">📅</div>
+          <div>
+            <h2 class="ttl" data-i18n="card_calendar">Calendario</h2>
+            <p class="sub" data-i18n="card_calendar_sub">
+              Fechas de campaña, cortes y plazos.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="pill" data-i18n="pill_dates">Fechas</span>
+          <span class="btn">Entrar →</span>
+        </div>
+      </a>
+
+      <!-- CONDICIONES -->
+      <a class="card" href="./condiciones.html">
+        <div class="cardHead">
+          <div class="ico">📌</div>
+          <div>
+            <h2 class="ttl" data-i18n="card_terms">Condiciones</h2>
+            <p class="sub" data-i18n="card_terms_sub">
+              Pago · envío · plazos de repetición.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="pill" data-i18n="pill_rules">Normas</span>
+          <span class="btn">Entrar →</span>
+        </div>
+      </a>
+
+      <!-- SOPORTE -->
+      <a class="card" href="mailto:info@abuelatata.com">
+        <div class="cardHead">
+          <div class="ico">✉️</div>
+          <div>
+            <h2 class="ttl" data-i18n="card_support">Soporte</h2>
+            <p class="sub" data-i18n="card_support_sub">
+              Si hay cualquier incidencia, escríbenos.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="pill">info@abuelatata.com</span>
+          <span class="btn">Escribir →</span>
+        </div>
+      </a>
+    </section>
+
+    <div class="note" data-i18n="note">
+      Nota: el total del pedido en la app es ANTES de impuestos (IVA/Recargo según cliente).
+    </div>
+
+
+
+    <div class="installBar" id="installBar" aria-live="polite">
+      <div class="installCopy">
+        <div class="installTitle" data-i18n="install_title">Instala la app en tu móvil</div>
+        <div class="installText" id="installText" data-i18n="install_text">Acceso directo en pantalla de inicio.</div>
+      </div>
+      <div class="installActions">
+        <button class="installMini" id="installClose" type="button" aria-label="Cerrar">✕</button>
+        <button class="installMini primary" id="installBtn" type="button" data-i18n="install_btn">Instalar</button>
+      </div>
+    </div>
+
+    <footer>
+      <span>© Abuela Tata · Uso profesional B2B</span>
+    </footer>
+  </div>
+
+  <script>
+    const i18n = {
+      es: {
+        brand_title:"Área Profesional",
+        brand_sub:"Acceso para clientes · pedidos · descargas · tarifas",
+        hero_title:"Bienvenid@ al Área Profesional",
+        hero_text:"Acceso directo a la app de pedidos, stock disponible, descargas multimedia en alta resolución, tarifas, calendario de campaña y condiciones.",
+        card_orders:"Pedidos repetición",
+        card_orders_sub:"Accede a la app de pedidos con dos zonas diferenciadas: repetición de campaña y stock disponible inmediato.",
+        card_media:"Descarga multimedia",
+        card_media_sub:"WeTransfer en alta calidad (sin pérdida).",
+        card_prices:"Tarifas",
+        card_prices_sub:"Tarifa oficial en PDF (y Excel si aplica).",
+        card_calendar:"Calendario",
+        card_calendar_sub:"Fechas de campaña, cortes y plazos.",
+        card_terms:"Condiciones",
+        card_terms_sub:"Pago · envío · plazos de repetición.",
+        card_support:"Soporte",
+        card_support_sub:"Si hay cualquier incidencia, escríbenos.",
+        pill_fullscreen:"Pantalla completa",
+        pill_wetransfer:"WeTransfer",
+        pill_pdf:"PDF",
+        pill_dates:"Fechas",
+        pill_rules:"Normas",
+        note:"Nota: el total del pedido en la app es ANTES de impuestos (IVA/Recargo según cliente).",
+        quick_eyebrow:"Acceso rápido",
+        quick_title:"¿Qué deseas hacer?",
+        quick_text:"En la app de pedidos encontrarás dos formas distintas de trabajar: repetición de campaña y stock disponible con entrega inmediata.",
+        quick_repeat_title:"Pedido de repetición",
+        quick_repeat_text:"Producción según calendario y fechas de servicio.",
+        quick_stock_title:"Stock disponible",
+        quick_stock_text:"Entrega inmediata hasta agotar existencias.",
+        orders_eyebrow:"Zona principal",
+        orders_title:"Pedidos",
+        orders_text:"Aquí accedes a la app donde podrás elegir entre repeticiones y stock disponible. Lo hemos dejado más claro para que el cliente lo entienda a la primera.",
+        info_eyebrow:"Documentación",
+        info_title:"Información de campaña",
+        info_text:"Todo lo demás queda agrupado aquí: descargas, tarifas, calendario, condiciones y soporte.",
+        install_title:"Instala la app en tu móvil",
+        install_text:"Acceso directo en pantalla de inicio.",
+        install_btn:"Instalar",
+        install_ios:"En iPhone: pulsa Compartir y luego Añadir a pantalla de inicio."
+      },
+      en: {
+        brand_title:"Professional Area",
+        brand_sub:"Client access · orders · downloads · price lists",
+        hero_title:"Welcome to the Professional Area",
+        hero_text:"Direct access to repeat orders, high-resolution downloads, price lists, campaign calendar and terms.",
+        card_orders:"Repeat orders",
+        card_orders_sub:"Open the app in full screen. (Back button included)",
+        card_media:"Media downloads",
+        card_media_sub:"WeTransfer in high quality (no loss).",
+        card_prices:"Price lists",
+        card_prices_sub:"Official PDF price list (and Excel if applicable).",
+        card_calendar:"Calendar",
+        card_calendar_sub:"Campaign dates, cut-offs and deadlines.",
+        card_terms:"Terms",
+        card_terms_sub:"Payment · shipping · repeat order deadlines.",
+        card_support:"Support",
+        card_support_sub:"If anything happens, email us.",
+        pill_fullscreen:"Full screen",
+        pill_wetransfer:"WeTransfer",
+        pill_pdf:"PDF",
+        pill_dates:"Dates",
+        pill_rules:"Rules",
+        note:"Note: the order total in the app is BEFORE taxes (VAT / surcharge depending on the client).",
+        quick_eyebrow:"Quick access",
+        quick_title:"What would you like to do?",
+        quick_text:"Inside the order app you will find two different ways to work: repeat orders and available stock with immediate delivery.",
+        quick_repeat_title:"Repeat order",
+        quick_repeat_text:"Production according to the calendar and service dates.",
+        quick_stock_title:"Available stock",
+        quick_stock_text:"Immediate delivery while stock lasts.",
+        orders_eyebrow:"Main area",
+        orders_title:"Orders",
+        orders_text:"This is where you access the ordering app with two clearly separated areas: repeat orders and available stock.",
+        info_eyebrow:"Documentation",
+        info_title:"Campaign information",
+        info_text:"Everything else is grouped here: downloads, price lists, calendar, terms and support.",
+        install_title:"Install the app on your phone",
+        install_text:"Add a shortcut to your home screen.",
+        install_btn:"Install",
+        install_ios:"On iPhone: tap Share and then Add to Home Screen."
+      },
+      pt: {
+        brand_title:"Área Profissional",
+        brand_sub:"Acesso para clientes · pedidos · downloads · preços",
+        hero_title:"Bem-vind@ à Área Profissional",
+        hero_text:"Acesso direto a pedidos de repetição, downloads em alta resolução, tabelas de preços, calendário e condições.",
+        card_orders:"Pedidos repetição",
+        card_orders_sub:"Abra a app em ecrã completo. (Com botão de voltar)",
+        card_media:"Download multimédia",
+        card_media_sub:"WeTransfer em alta qualidade (sem perda).",
+        card_prices:"Tabelas de preços",
+        card_prices_sub:"Tabela oficial em PDF (e Excel se aplicável).",
+        card_calendar:"Calendário",
+        card_calendar_sub:"Datas da campanha, cortes e prazos.",
+        card_terms:"Condições",
+        card_terms_sub:"Pagamento · envio · prazos de repetição.",
+        card_support:"Suporte",
+        card_support_sub:"Se houver algum problema, envie-nos email.",
+        pill_fullscreen:"Ecrã completo",
+        pill_wetransfer:"WeTransfer",
+        pill_pdf:"PDF",
+        pill_dates:"Datas",
+        pill_rules:"Regras",
+        note:"Nota: o total do pedido na app é ANTES de impostos (IVA/recargo conforme o cliente).",
+        quick_eyebrow:"Acesso rápido",
+        quick_title:"O que deseja fazer?",
+        quick_text:"Na app de pedidos encontrará duas formas distintas de trabalhar: repetição de campanha e stock disponível com entrega imediata.",
+        quick_repeat_title:"Pedido de repetição",
+        quick_repeat_text:"Produção segundo o calendário e as datas de serviço.",
+        quick_stock_title:"Stock disponível",
+        quick_stock_text:"Entrega imediata até esgotar existências.",
+        orders_eyebrow:"Zona principal",
+        orders_title:"Pedidos",
+        orders_text:"Aqui entra na app onde poderá escolher entre repetições e stock disponível. Fica muito mais claro para o cliente.",
+        info_eyebrow:"Documentação",
+        info_title:"Informação da campanha",
+        info_text:"Tudo o resto fica agrupado aqui: downloads, preços, calendário, condições e suporte.",
+        install_title:"Instale a app no seu telemóvel",
+        install_text:"Atalho direto no ecrã inicial.",
+        install_btn:"Instalar",
+        install_ios:"No iPhone: toque em Partilhar e depois em Adicionar ao ecrã principal."
+      }
+    };
+
+    function setLang(lang){
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-i18n]").forEach(el=>{
+        const k = el.getAttribute("data-i18n");
+        if(i18n[lang] && i18n[lang][k]) el.textContent = i18n[lang][k];
+      });
+      document.getElementById("btn-es").setAttribute("aria-pressed", String(lang==="es"));
+      document.getElementById("btn-en").setAttribute("aria-pressed", String(lang==="en"));
+      document.getElementById("btn-pt").setAttribute("aria-pressed", String(lang==="pt"));
+      localStorage.setItem("lang", lang);
+      if (typeof updateInstallText === "function") updateInstallText(lang);
+    }
+
+    document.getElementById("btn-es").addEventListener("click", ()=>setLang("es"));
+    document.getElementById("btn-en").addEventListener("click", ()=>setLang("en"));
+    document.getElementById("btn-pt").addEventListener("click", ()=>setLang("pt"));
+
+    setLang(localStorage.getItem("lang") || "es");
+  </script>
+
+
+  <script>
+    let deferredPrompt = null;
+
+    function isIos(){
+      return /iphone|ipad|ipod/i.test(navigator.userAgent);
+    }
+
+    function isInStandaloneMode(){
+      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    }
+
+    function closeInstallBar(remind = true){
+      const bar = document.getElementById('installBar');
+      if(!bar) return;
+      bar.style.display = 'none';
+      if(remind) localStorage.setItem('installBarClosed', '1');
+    }
+
+    function openInstallBar(){
+      if(isInStandaloneMode()) return;
+      if(localStorage.getItem('installBarClosed') === '1') return;
+      const bar = document.getElementById('installBar');
+      if(bar) bar.style.display = 'flex';
+    }
+
+    function updateInstallText(lang){
+      const txt = document.getElementById('installText');
+      const btn = document.getElementById('installBtn');
+      if(!txt || !btn) return;
+
+      if(isIos() && !deferredPrompt){
+        txt.textContent = i18n[lang]?.install_ios || i18n.es.install_ios;
+        btn.style.display = 'none';
+      } else {
+        txt.textContent = i18n[lang]?.install_text || i18n.es.install_text;
+        btn.style.display = deferredPrompt ? 'inline-flex' : 'none';
+      }
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      localStorage.removeItem('installBarClosed');
+      updateInstallText(document.documentElement.lang || 'es');
+      openInstallBar();
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredPrompt = null;
+      closeInstallBar(false);
+    });
+
+    document.getElementById('installBtn').addEventListener('click', async () => {
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      closeInstallBar(false);
+    });
+
+    document.getElementById('installClose').addEventListener('click', () => closeInstallBar(true));
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+
+    setTimeout(() => {
+      updateInstallText(document.documentElement.lang || 'es');
+      if(isIos() && !isInStandaloneMode()) openInstallBar();
+    }, 1200);
+  </script>
+</body>
+</html>
