@@ -2128,13 +2128,7 @@ import { supabase as supabaseClient } from "./shared/config/supabase.js";
       return;
     }
 
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true
-      }
-    });
+    supabase = supabaseClient;
 
     supabase.auth.onAuthStateChange((event, session) => {
       if (event === "PASSWORD_RECOVERY") {
